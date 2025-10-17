@@ -28,10 +28,6 @@ jobs:
       - name: 🧰 Build du projet avec Maven
         run: mvn -B clean package --file pom.xml
 
-      # 🧪 Étape 4 : Lancer les tests unitaires
-      - name: 🧠 Exécution des tests unitaires
-        run: mvn test
-
       # 📤 Étape 5 : Sauvegarder le fichier JAR généré
       - name: 💾 Sauvegarder le JAR généré
         uses: actions/upload-artifact@v4
