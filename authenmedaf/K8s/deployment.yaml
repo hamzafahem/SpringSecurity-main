@@ -1,0 +1,27 @@
+apiVersion: apps/v1  
+kind: Deployment
+metadata:
+  name: authenmedaf-deployment  # ✅ Minuscule recommandé pour les noms
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: authenmedaf
+  template:
+    metadata:
+      labels:
+        app: authenmedaf
+    spec:
+      containers:
+      - name: authenmedaf
+        image: hamzadev2025/medafrica:1.2.0  # ⚠️ Vérifie le nom de ton image sur Docker Hub
+        imagePullPolicy: Always  # ✅ Toujours pull la dernière version
+        ports:
+        - containerPort: 9091
+        resources:  # ✅ Bon practice : définir les ressources
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"

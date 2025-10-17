@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Medafrica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .login-wrapper {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            width: 380px;
+        }
+
+        .profiles-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            width: 320px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 15px;
+            border-left: 4px solid #c33;
+        }
+
+        .profile-card {
+            background: #f8f9fa;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            font-size: 14px;
+            transition: transform 0.2s;
+        }
+
+        .profile-card:hover {
+            transform: translateX(5px);
+            background: #e9ecef;
+        }
+
+        .profile-email {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .profile-pass {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #ddd, transparent);
+            margin: 20px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #667eea;
+            color: white;
+            border-radius: 12px;
+            font-size: 11px;
+            margin-left: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .login-wrapper {
+                flex-direction: column;
+            }
+
+            .login-container,
+            .profiles-container {
+                width: 100%;
+                max-width: 380px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-wrapper">
+        <!-- Login Form -->
+        <div class="login-container">
+            <h2>🔐 Login</h2>
+            <form th:action="@{/login}" method="post">
+                <input type="text" name="username" placeholder="📧 Email" required autocomplete="email" />
+                <input type="password" name="password" placeholder="🔑 Password" required
+                    autocomplete="current-password" />
+                <button type="submit">Login</button>
+            </form>
+            <p class="error" th:if="${error}" th:text="${error}"></p>
+        </div>
+
+        <!-- Default Profiles -->
+        <div class="profiles-container">
+            <h3>👥 Default Profiles</h3>
+
+            <div class="profile-card">
+                <span class="profile-email">👑 admin@medafrica.com</span>
+                <span class="profile-pass">Password: <strong>admin123</strong></span>
+                <span class="badge">ADMIN</span>
+            </div>
+
+            <div class="profile-card">
+                <span class="profile-email">📊 manager@medafrica.com</span>
+                <span class="profile-pass">Password: <strong>manager123</strong></span>
+                <span class="badge">MANAGER</span>
+            </div>
+
+            <div class="profile-card">
+                <span class="profile-email">👤 user@medafrica.com</span>
+                <span class="profile-pass">Password: <strong>user123</strong></span>
+                <span class="badge">USER</span>
+            </div>
+
+            <div class="profile-card">
+                <span class="profile-email">🎭 guest@medafrica.com</span>
+                <span class="profile-pass">Password: <strong>guest123</strong></span>
+                <span class="badge">GUEST</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <p style="text-align: center; color: #666; font-size: 13px;">
+                💡 Copy & paste email to login
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

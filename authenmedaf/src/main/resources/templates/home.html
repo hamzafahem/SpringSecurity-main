@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Medafrica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .username {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 36px;
+        }
+
+        .welcome-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-box p {
+            color: #666;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: transform 0.2s;
+            margin-top: 20px;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #28a745;
+            color: white;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="welcome-icon">🎉</div>
+        <h1>Marhba bik f Medafrica!</h1>
+        <p class="username" th:text="${username}"></p>
+        <span class="badge">✅ Authenticated via JWT</span>
+
+        <div class="info-box">
+            <p><strong>🔐 Authentication:</strong> JWT Token in HttpOnly Cookie</p>
+            <p><strong>⏱️ Session:</strong> Stateless (24h expiration)</p>
+            <p><strong>🛡️ Security:</strong> BCrypt Password Encryption</p>
+        </div>
+
+        <a href="/logout" class="logout-btn">🚪 Logout</a>
+    </div>
+</body>
+
+</html>
