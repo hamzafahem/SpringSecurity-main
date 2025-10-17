@@ -32,7 +32,7 @@ jobs:
         run: |
           cd authenmedaf
           docker build -t hamzadev2025/authenmedaf:3.3.3 .
-          docker tag hamzadev2025/authenmedaf:2.2.2 hamzadev2025/authenmedaf:latest
+          docker tag hamzadev2025/authenmedaf:3.3.3
 
       - name: 📤 Push Docker Image vers Docker Hub
         run: |

@@ -28,7 +28,7 @@ Write-Host "✅ Configuration appliquée" -ForegroundColor Green
 
 # Mettre à jour l'image Docker
 Write-Host "`n3️⃣ Mise à jour de l'image Docker..." -ForegroundColor Yellow
-kubectl set image deployment/authenmedaf authenmedaf=hamzadev2025/authenmedaf:2.2.2
+kubectl set image deployment/authenmedaf authenmedaf=hamzadev2025/authenmedaf:3.3.3
 Write-Host "✅ Image mise à jour" -ForegroundColor Green
 
 # Attendre que le déploiement soit prêt
