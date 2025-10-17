@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  build-and-deploy:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,28 +22,25 @@ jobs:
       - name: 🧰 Build le projet avec Maven
         run: mvn -B clean package -DskipTests --file authenmedaf/pom.xml
 
-      # ✅ UTILISEZ UN SECRET, JAMAIS LE TOKEN EN DUR !
       - name: 🔑 Login Docker Hub
         uses: docker/login-action@v3
         with:
           username: hamzadev2025
-          password: ${{ secrets.DOCKERHUB_TOKEN }} # ← SECRET !
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: 🐳 Build Docker Image
         run: |
           cd authenmedaf
-          docker build -t hamzadev2025/authenmedaf:2.2.2 .
+          docker build -t hamzadev2025/authenmedaf:3.3.3 .
           docker tag hamzadev2025/authenmedaf:2.2.2 hamzadev2025/authenmedaf:latest
 
-      - name: 📤 Push Docker Image
+      - name: 📤 Push Docker Image vers Docker Hub
         run: |
-          docker push hamzadev2025/authenmedaf:2.2.2
+          docker push hamzadev2025/authenmedaf:3.3.3
           docker push hamzadev2025/authenmedaf:latest
 
-      - name: ☸️ Deploy to Kubernetes
+      - name: ✅ Build terminé !
         run: |
-          echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
-          export KUBECONFIG=kubeconfig.yaml
-          kubectl apply -f authenmedaf/k8s-deployment.yaml
-          kubectl set image deployment/authenmedaf authenmedaf=hamzadev2025/authenmedaf:2.2.2
-          kubectl rollout status deployment/authenmedaf
+          echo "🎉 Image Docker disponible sur Docker Hub !"
+          echo "🚀 Pour déployer sur Minikube, exécutez :"
+          echo "   kubectl apply -f authenmedaf/k8s-deployment.yaml"

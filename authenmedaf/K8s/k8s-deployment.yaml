@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: authenmedaf
-          image: <DOCKER_USERNAME>/authenmedaf:2.2.2 # <- hna gha treplace <DOCKER_USERNAME> b username dyalek
+          image: hamzadev2025/authenmedaf:3.3.3
           ports:
             - containerPort: 9091
           env:
