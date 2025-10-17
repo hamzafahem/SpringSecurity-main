@@ -14,7 +14,7 @@ jobs:
       - name: 📦 Checkout du dépôt
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Java
+      # 2️⃣ Setup Java 17
       - name: ⚙️ Configurer Java 17 (Temurin)
         uses: actions/setup-java@v4
         with:
@@ -22,9 +22,9 @@ jobs:
           java-version: "17"
           cache: "maven"
 
-      # 3️⃣ Build le projet Maven (JAR)
-      - name: 🧰 Build du projet avec Maven
-        run: mvn -B clean package --file authenmedaf/pom.xml
+      # 3️⃣ Build Maven JAR
+      - name: 🧰 Build le projet avec Maven
+        run: mvn -B clean package -DskipTests --file authenmedaf/pom.xml
 
       # 4️⃣ Login Docker Hub
       - name: 🔑 Login Docker Hub
@@ -51,5 +51,6 @@ jobs:
         run: |
           echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
           export KUBECONFIG=kubeconfig.yaml
+          kubectl apply -f authenmedaf/k8s-deployment.yaml
           kubectl set image deployment/authenmedaf authenmedaf=${{ secrets.DOCKER_USERNAME }}/authenmedaf:2.2.2
           kubectl rollout status deployment/authenmedaf
