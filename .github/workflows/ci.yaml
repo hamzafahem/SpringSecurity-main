@@ -1,6 +1,5 @@
 name: 🚀 Spring Boot CI/CD - Authenmedaf
 
-# Trigger workflow uniquement sur push sur main
 on:
   push:
     branches: [main]
@@ -10,11 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout le code
       - name: 📦 Checkout du dépôt
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Java 17
       - name: ⚙️ Configurer Java 17 (Temurin)
         uses: actions/setup-java@v4
         with:
@@ -22,31 +19,27 @@ jobs:
           java-version: "17"
           cache: "maven"
 
-      # 3️⃣ Build Maven JAR
       - name: 🧰 Build le projet avec Maven
         run: mvn -B clean package -DskipTests --file authenmedaf/pom.xml
 
-      # 4️⃣ Login Docker Hub
+      # ✅ UTILISEZ UN SECRET, JAMAIS LE TOKEN EN DUR !
       - name: 🔑 Login Docker Hub
         uses: docker/login-action@v3
         with:
           username: hamzadev2025
-          password: ${{ secrets.HAMZADEV2025 }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }} # ← SECRET !
 
-      # 5️⃣ Build Docker image
       - name: 🐳 Build Docker Image
         run: |
           cd authenmedaf
           docker build -t hamzadev2025/authenmedaf:2.2.2 .
           docker tag hamzadev2025/authenmedaf:2.2.2 hamzadev2025/authenmedaf:latest
 
-      # 6️⃣ Push Docker image vers Docker Hub
       - name: 📤 Push Docker Image
         run: |
           docker push hamzadev2025/authenmedaf:2.2.2
           docker push hamzadev2025/authenmedaf:latest
 
-      # 7️⃣ Deploy Kubernetes
       - name: ☸️ Deploy to Kubernetes
         run: |
           echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
