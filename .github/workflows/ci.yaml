@@ -1,6 +1,6 @@
 name: 🚀 Spring Boot CI/CD - Authenmedaf
 
-# Trigger workflow uniquement sur push f main
+# Trigger workflow uniquement sur push sur main
 on:
   push:
     branches: [main]
@@ -30,21 +30,21 @@ jobs:
       - name: 🔑 Login Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: hamzadev2025
+          password: ${{ secrets.HAMZADEV2025 }}
 
       # 5️⃣ Build Docker image
       - name: 🐳 Build Docker Image
         run: |
           cd authenmedaf
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/authenmedaf:2.2.2 .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/authenmedaf:2.2.2 ${{ secrets.DOCKER_USERNAME }}/authenmedaf:latest
+          docker build -t hamzadev2025/authenmedaf:2.2.2 .
+          docker tag hamzadev2025/authenmedaf:2.2.2 hamzadev2025/authenmedaf:latest
 
       # 6️⃣ Push Docker image vers Docker Hub
       - name: 📤 Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/authenmedaf:2.2.2
-          docker push ${{ secrets.DOCKER_USERNAME }}/authenmedaf:latest
+          docker push hamzadev2025/authenmedaf:2.2.2
+          docker push hamzadev2025/authenmedaf:latest
 
       # 7️⃣ Deploy Kubernetes
       - name: ☸️ Deploy to Kubernetes
@@ -52,5 +52,5 @@ jobs:
           echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
           export KUBECONFIG=kubeconfig.yaml
           kubectl apply -f authenmedaf/k8s-deployment.yaml
-          kubectl set image deployment/authenmedaf authenmedaf=${{ secrets.DOCKER_USERNAME }}/authenmedaf:2.2.2
+          kubectl set image deployment/authenmedaf authenmedaf=hamzadev2025/authenmedaf:2.2.2
           kubectl rollout status deployment/authenmedaf
