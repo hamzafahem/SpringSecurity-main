@@ -1,0 +1,39 @@
+# k8s-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authenmedaf
+  labels:
+    app: authenmedaf
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: authenmedaf
+  template:
+    metadata:
+      labels:
+        app: authenmedaf
+    spec:
+      containers:
+        - name: authenmedaf
+          image: <DOCKER_USERNAME>/authenmedaf:2.2.2 # <- hna gha treplace <DOCKER_USERNAME> b username dyalek
+          ports:
+            - containerPort: 9091
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authenmedaf-service
+spec:
+  selector:
+    app: authenmedaf
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9091
+  type: LoadBalancer
